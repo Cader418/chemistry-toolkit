@@ -1,5 +1,4 @@
 package project1;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -112,7 +111,7 @@ public class balanceChemicalEquations2 {
 		}
 		int rows = symbols.size();
 
-		int[][] mat = new int[rows][columns+1]; 
+		double[][] mat = new double[rows][columns+1]; 
 		ArrayList<String> tempArr;
 		int curNumInd = 0;
 		
@@ -140,13 +139,26 @@ public class balanceChemicalEquations2 {
 				}
 			}
 		}
-		//print matrix;
-		ref obj = new ref();
-		for(int i = 0; i < mat.length;i++) { 
-			for(int j = 0; j < mat[0].length; j++) 
-				System.out.print(mat[i][j] + " ");
-		System.out.println("\n");
+		
+		ref obj2 = new ref();
+		double[] res = obj2.getCoefficients(mat);
+		
+		//handle error when there are equal amount of elements as terms.
+		for(int i = 0; i < res.length; i++) {
+			if(res[i] == 0)
+				res[i] = res[res.length-1];
 		}
+		
+		//print solution :)
+		for(int i = 0; i < splitEquation.size(); i++) {
+			System.out.print((int)res[i] + splitEquation.get(i) + " "); }
+		 
+		//print matrix;
+		/*
+		 * ref obj = new ref(); for(int i = 0; i < mat.length;i++) { for(int j = 0; j <
+		 * mat[0].length; j++) System.out.print(mat[i][j] + " ");
+		 * System.out.println("\n"); }
+		 */
 		//obj.writeMatrix(mat);
 	}
 
