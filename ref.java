@@ -31,8 +31,9 @@ public class ref {
 	public static double[] rowMinusRowTimesNum(double mat[][], double row1[], double row2[], double num) {
 		int c = mat[0].length;
 		int r = mat.length;
-		for (int i = 0; i < c; i++) 
+		for (int i = 0; i < c; i++) { 
 			row2[i] = row2[i] - (num * row1[i]);
+		}
 		return row2;
 	}
 	
@@ -49,7 +50,7 @@ public class ref {
 				double[] temp = mat[nonZeroLoc];
 				mat[nonZeroLoc] = mat[i];
 				mat[i] = temp;
-				writeMatrix(mat);
+				//writeMatrix(mat);
 			}
 			else {
 				//set leading entry to 1
@@ -66,22 +67,54 @@ public class ref {
 				}
 				j++;
 				i++;
-				writeMatrix(mat);
 			}
 		}
 	}
 	
-	public static void main(String[] args) {
-		double[][] arr = new double[][] {
-			{8,0,-1,0},
-			{18,0,0,-2},
-			{0,2,-2,-1}
-		};
-		ref obj1 = new ref();
-		obj1.writeMatrix(arr);
-		obj1.refCalc(arr);
-		System.out.println('\n');
-		obj1.writeMatrix(arr);
+	public static double[] getCoefficients(double[][] arr){
+		refCalc(arr);
+		//get coefficeneints from the last column in the matrix.
+		double[] res = new double[arr.length+1];
+		for(int i = 0; i < arr.length; i++) {
+			res[i] = arr[i][arr[0].length-2];
+		}
+		int w = 1;
+		int j = 1;
+		//while loop to find LCM
+		while (true) {
+			boolean works = true;
+			for(int i = 0; i < res.length; i++) {
+				if (((j*res[i])%1) != 0)
+					works = false;
+			}
+			if (works)
+				break;
+			j++;
+			w++;
+		}
+		//loop to create coefficients.
+		for(int i = 0; i < res.length; i++) {
+			res[i] = Math.abs(res[i] * w);
+		}
+		res[res.length-1] = w;
+		return res;
 	}
+	
+	public static void main(String[] args) {
+		/*
+		 * double[][] arr = new double[][] { {8,0,-1,0}, {18,0,0,-2}, {0,2,-2,-1} }; ref
+		 * obj1 = new ref(); obj1.writeMatrix(arr); obj1.refCalc(arr);
+		 * System.out.println('\n'); obj1.writeMatrix(arr);
+		 * 
+		 * double[] res = new double[arr.length]; for(int i = 0; i < arr.length; i++) {
+		 * res[i] = arr[i][arr[0].length-1]; }
+		 * 
+		 * int w = 1; int j = 1; while (true) { boolean works = true; for(int i = 0; i <
+		 * res.length; i++) { if (((j*res[i])%1) != 0) works = false; } if (works)
+		 * break; j++; w++; } System.out.println(w);
+		 */
+	}
+	
+	
 
 }
